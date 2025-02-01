@@ -74,8 +74,15 @@ class App extends Component<object, AppState> {
       .then((data: Response) => {
         this.setState({ heroes: data.results, loading: false });
       })
-      .catch((error) => {
-        this.setState({ error: error.message, loading: false });
+      .catch((error: unknown) => {
+        if (error instanceof Error) {
+          this.setState({ error: error.message, loading: false });
+        } else {
+          this.setState({
+            error: 'An unknown error occurred.',
+            loading: false,
+          });
+        }
       });
   };
 

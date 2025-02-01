@@ -1,1 +1,4 @@
-npm run lint-staged 
+#!/usr/bin/env sh
+cd class-components 
+
+npx lint-staged

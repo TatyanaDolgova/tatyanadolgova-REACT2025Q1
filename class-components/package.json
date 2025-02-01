@@ -10,8 +10,9 @@
     "preview": "vite preview",
     "prettier": "prettier \"src/**/*.{tsx,ts}\" --check",
     "format:fix": "prettier --write .",
-    "prepare": "husky && echo npm run lint-staged > .husky/pre-commit",
-    "lint-staged": "lint-staged"
+    "prepare": "cd .. && husky class-components/.husky",
+    "lint-staged": "lint-staged",
+    "format": "prettier \"src/**/*.ts?(x)\" --write"
   },
   "dependencies": {
     "react": "^18.3.1",
