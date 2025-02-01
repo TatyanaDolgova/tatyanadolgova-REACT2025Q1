@@ -28,28 +28,6 @@
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
-.search-button {
-  padding: 12px 18px;
-  font-size: 16px;
-  text-transform: uppercase;
-  cursor: pointer;
-  background-color: #ff9800;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-}
-
-.search-button:hover {
-  background-color: #e68900;
-  transform: scale(1.05);
-}
-
-.search-button:active {
-  transform: scale(1);
-}
-
 @media (max-width: 600px) {
   .search-container {
     flex-direction: column;
@@ -57,10 +35,6 @@
   }
 
   .search-input {
-    width: 100%;
-  }
-
-  .search-button {
     width: 100%;
   }
 }

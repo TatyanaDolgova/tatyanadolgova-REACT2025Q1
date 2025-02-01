@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './Search.css';
 
 interface SearchProps {
-  onSearch: (query: string) => void;
+  onSearch: (searchTerm: string) => void;
+  initialValue: string;
 }
 
 interface SearchState {
@@ -12,11 +13,9 @@ interface SearchState {
 export class Search extends Component<SearchProps, SearchState> {
   constructor(props: SearchProps) {
     super(props);
-    this.state = {
-      searchTerm: '',
-    };
+    this.state = { searchTerm: props.initialValue };
   }
-  componentDidMount(): void {
+  componentDidMount() {
     const savedSearch = localStorage.getItem('searchRequest');
     if (savedSearch) {
       this.setState({ searchTerm: savedSearch });
@@ -28,14 +27,7 @@ export class Search extends Component<SearchProps, SearchState> {
   };
 
   handleSearch = () => {
-    const { onSearch } = this.props;
-    let { searchTerm } = this.state;
-
-    searchTerm = searchTerm.trim();
-
-    localStorage.setItem('searchTerm', searchTerm);
-
-    onSearch(searchTerm);
+    this.props.onSearch(this.state.searchTerm);
   };
 
   render() {
@@ -48,7 +40,7 @@ export class Search extends Component<SearchProps, SearchState> {
           className="search-input"
           onChange={this.handleInputChange}
         />
-        <button onClick={this.handleSearch} className="search-button">
+        <button onClick={this.handleSearch} className="button">
           Search
         </button>
       </div>
