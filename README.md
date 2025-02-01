@@ -1,1 +1,0 @@
-My  repository for course Rolling Scopes School React 2025
