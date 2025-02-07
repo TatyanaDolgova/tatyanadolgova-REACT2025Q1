@@ -10,9 +10,10 @@
     "preview": "vite preview",
     "prettier": "prettier \"src/**/*.{tsx,ts}\" --check",
     "format:fix": "prettier --write .",
-    "prepare": "cd .. && husky class-components/.husky",
     "lint-staged": "lint-staged",
-    "format": "prettier \"src/**/*.ts?(x)\" --write"
+    "format": "prettier \"src/**/*.ts?(x)\" --write",
+    "prepare": "husky",
+    "deploy": "npm run build && npx gh-pages -d dist"
   },
   "dependencies": {
     "react": "^18.3.1",
