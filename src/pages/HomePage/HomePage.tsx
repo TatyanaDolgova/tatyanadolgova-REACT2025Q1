@@ -8,16 +8,15 @@ import { CardList } from '../../components/CardList/CardList';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { ThrowErrorButton } from '../../components/ThrowErrorButton/ThrowErrorButton';
 import { CardDetails } from '../../components/CardDetails/CardDetails';
+import { useSearchRequest } from '../../hooks/useSearchRequest';
 
 const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchRequest, setSearchRequest] = useState(
-    localStorage.getItem('searchRequest')
-  );
   const [pokemons, setPokemons] = useState<PokemonDetails[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState(1);
+  const [searchRequest, setSearchRequest] = useSearchRequest();
 
   const { page } = useParams();
   const navigate = useNavigate();
@@ -47,9 +46,7 @@ const HomePage = () => {
   }, [searchRequest, currentPage]);
 
   const handleSearch = async (query: string) => {
-    const trimmedQuery = query.trim();
-    setSearchRequest(trimmedQuery);
-    localStorage.setItem('searchRequest', trimmedQuery);
+    setSearchRequest(query);
   };
 
   const setPage = (newPage: number) => {
