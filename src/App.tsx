@@ -45,7 +45,7 @@ const App = () => {
 
   useEffect(() => {
     fetchData(state.searchRequest);
-  }, []);
+  }, [state.searchRequest]);
 
   const fetchData = (query: string) => {
     setState((prev) => ({ ...prev, loading: true, error: null }));
