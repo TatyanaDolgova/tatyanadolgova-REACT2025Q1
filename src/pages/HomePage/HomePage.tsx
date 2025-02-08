@@ -1,36 +1,20 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { fetchPokemons, Pokemon } from '../../api/fetchPokemons';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { fetchPokemons, PokemonDetails } from '../../api/fetchPokemons';
 import { Search } from '../../components/Search/Search';
 import { ErrorBoundary } from '../../components/ErrorBoundary/ErrorBoundary';
 import { Loader } from '../../components/Loader/Loader';
 import { CardList } from '../../components/CardList/CardList';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { ThrowErrorButton } from '../../components/ThrowErrorButton/ThrowErrorButton';
-
-export interface Hero {
-  birth_year: string;
-  created: string;
-  edited: string;
-  eye_color: string;
-  films: string[];
-  gender: 'male' | 'female';
-  hair_color: string;
-  height: string;
-  homeworld: string;
-  mass: string;
-  name: string;
-  skin_color: string;
-  starships: string[];
-  url: string;
-  vehicles: string[];
-}
+import { CardDetails } from '../../components/CardDetails/CardDetails';
 
 const HomePage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchRequest, setSearchRequest] = useState(
     localStorage.getItem('searchRequest')
   );
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [pokemons, setPokemons] = useState<PokemonDetails[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState(1);
@@ -38,6 +22,7 @@ const HomePage = () => {
   const { page } = useParams();
   const navigate = useNavigate();
   const currentPage = Number(page) || 1;
+  const selectedPokemon = searchParams.get('details');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,6 +56,17 @@ const HomePage = () => {
     navigate(`/pages/${newPage}`);
   };
 
+  const handleSelectPokemon = (id: string) => {
+    setSearchParams({ details: id });
+  };
+
+  const handleCloseDetails = () => {
+    setSearchParams((prevParams) => {
+      prevParams.delete('details');
+      return prevParams;
+    });
+  };
+
   return (
     <>
       <Search onSearch={handleSearch} initialValue={searchRequest} />
@@ -80,7 +76,23 @@ const HomePage = () => {
           <p className="error-message">{error}</p>
         ) : (
           <>
-            <CardList pokemons={pokemons} />
+            <div className="container">
+              <CardList
+                pokemons={pokemons}
+                onSelect={handleSelectPokemon}
+                onClick={handleCloseDetails}
+              />
+              {selectedPokemon && (
+                <div className="right-section">
+                  <CardDetails
+                    id={selectedPokemon}
+                    onClose={handleCloseDetails}
+                    currentPage={currentPage}
+                  />
+                </div>
+              )}
+            </div>
+
             {totalPages > 1 && (
               <Pagination
                 currentPage={currentPage}
