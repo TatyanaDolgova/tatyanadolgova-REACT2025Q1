@@ -3,7 +3,7 @@ import './Search.css';
 
 interface SearchProps {
   onSearch: (searchTerm: string) => void;
-  initialValue: string;
+  initialValue: string | null;
 }
 
 export const Search = ({ onSearch, initialValue }: SearchProps) => {
@@ -21,14 +21,18 @@ export const Search = ({ onSearch, initialValue }: SearchProps) => {
   };
 
   const handleSearch = () => {
-    onSearch(searchTerm);
+    if (searchTerm) {
+      onSearch(searchTerm);
+    } else {
+      onSearch('');
+    }
   };
 
   return (
     <div className="search-container">
       <input
         type="text"
-        value={searchTerm}
+        value={searchTerm ? searchTerm : ''}
         placeholder="Enter your query"
         className="search-input"
         onChange={handleInputChange}

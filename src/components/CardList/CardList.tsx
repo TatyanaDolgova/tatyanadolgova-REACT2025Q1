@@ -1,16 +1,16 @@
 import { Card } from '../Card/Card';
 import './CardList.css';
-import { Hero } from '../../App';
+import { Pokemon } from '../../api/fetchPokemons';
 
 interface CardListProps {
-  heroes: Hero[];
+  pokemons: Pokemon[];
 }
 
-export const CardList = ({ heroes }: CardListProps) => {
+export const CardList = ({ pokemons }: CardListProps) => {
   return (
     <div className="card-list">
-      {heroes.map((hero) => (
-        <Card key={hero.name} hero={hero} />
+      {pokemons.map((pokemon) => (
+        <Card key={pokemon.name} pokemon={pokemon} />
       ))}
     </div>
   );

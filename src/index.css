@@ -2,8 +2,16 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  /* background-image: url('./assets/background.webp'); */
   background-size: 100%;
+}
+
+body {
+  background: linear-gradient(135deg, #fef6e4, #e0f2fe);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
 }
 
 a {
@@ -58,30 +66,29 @@ button:focus-visible {
 }
 
 .button {
-  padding: 12px 18px;
+  padding: 10px 18px;
   font-size: 16px;
-  text-transform: uppercase;
-  cursor: pointer;
-  background-color: #ff9800;
   color: white;
+  background: linear-gradient(135deg, #f6d365, #fda085);
   border: none;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
 .search-button:hover {
-  background-color: #e68900;
+  background: linear-gradient(135deg, #fda085, #f6d365);
   transform: scale(1.05);
 }
 
 .search-button:active {
-  transform: scale(1);
+  transform: scale(0.95);
 }
 
 .error-button {
   display: block;
   margin: 0 auto;
+  background: #d8000c;
 }
 
 .error-message {
