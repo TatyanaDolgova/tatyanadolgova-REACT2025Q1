@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import { Search } from './components/Search/Search';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { Loader } from './components/Loader/Loader';
@@ -35,23 +35,20 @@ interface Response {
   results: Hero[];
 }
 
-class App extends Component<object, AppState> {
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      searchRequest: localStorage.getItem('searchRequest') || '',
-      heroes: [],
-      loading: false,
-      error: null,
-    };
-  }
+const App = () => {
+  const [state, setState] = useState<AppState>({
+    searchRequest: localStorage.getItem('searchRequest') || '',
+    heroes: [],
+    loading: false,
+    error: null,
+  });
 
-  componentDidMount() {
-    this.fetchData(this.state.searchRequest);
-  }
+  useEffect(() => {
+    fetchData(state.searchRequest);
+  }, []);
 
-  fetchData = (query: string) => {
-    this.setState(() => ({ loading: true, error: null }));
+  const fetchData = (query: string) => {
+    setState((prev) => ({ ...prev, loading: true, error: null }));
     const url = query
       ? `https://swapi.dev/api/people/?search=${query}`
       : 'https://swapi.dev/api/people/';
@@ -72,45 +69,41 @@ class App extends Component<object, AppState> {
         return response.json();
       })
       .then((data: Response) => {
-        this.setState({ heroes: data.results, loading: false });
+        setState((prev) => ({ ...prev, heroes: data.results, loading: false }));
       })
       .catch((error: unknown) => {
-        if (error instanceof Error) {
-          this.setState({ error: error.message, loading: false });
-        } else {
-          this.setState({
-            error: 'An unknown error occurred.',
-            loading: false,
-          });
-        }
+        setState((prev) => ({
+          ...prev,
+          error:
+            error instanceof Error
+              ? error.message
+              : 'An unknown error occurred.',
+          loading: false,
+        }));
       });
   };
 
-  handleSearch = async (query: string) => {
+  const handleSearch = async (query: string) => {
     const trimmedQuery = query.trim();
-    this.setState(() => ({ searchRequest: trimmedQuery }));
+    setState((prev) => ({ ...prev, searchRequest: trimmedQuery }));
     localStorage.setItem('searchRequest', trimmedQuery);
-    this.fetchData(trimmedQuery);
+    fetchData(trimmedQuery);
   };
 
-  render() {
-    const { searchRequest, heroes, loading, error } = this.state;
-
-    return (
-      <>
-        <Search onSearch={this.handleSearch} initialValue={searchRequest} />
-        <ErrorBoundary>
-          {loading && <Loader />}
-          {error ? (
-            <p className="error-message">{error}</p>
-          ) : (
-            <CardList heroes={heroes} />
-          )}
-          <ThrowErrorButton />
-        </ErrorBoundary>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Search onSearch={handleSearch} initialValue={state.searchRequest} />
+      <ErrorBoundary>
+        {state.loading && <Loader />}
+        {state.error ? (
+          <p className="error-message">{state.error}</p>
+        ) : (
+          <CardList heroes={state.heroes} />
+        )}
+        <ThrowErrorButton />
+      </ErrorBoundary>
+    </>
+  );
+};
 
 export default App;
