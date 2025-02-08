@@ -32,7 +32,6 @@ export const CardDetails: React.FC<PokemonDetailsProps> = ({
   }, [id, currentPage]);
 
   if (loading) return <Loader />;
-
   return (
     <div className={'pokemon-details'}>
       <button onClick={onClose} className={'close-button'}>

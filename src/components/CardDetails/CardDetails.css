@@ -3,6 +3,7 @@
 }
 
 .pokemon-details {
+  position: relative;
   background: linear-gradient(135deg, #f6d365, #fda085);
   border-radius: 16px;
   padding: 20px;
