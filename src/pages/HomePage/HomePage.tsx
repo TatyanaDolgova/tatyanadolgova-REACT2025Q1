@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { fetchPokemons, PokemonDetails } from '../../api/fetchPokemons';
 import { Search } from '../../components/Search/Search';
@@ -17,11 +17,13 @@ const HomePage = () => {
   const [error, setError] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState(1);
   const [searchRequest, setSearchRequest] = useSearchRequest();
-
   const { page } = useParams();
   const navigate = useNavigate();
-  const currentPage = Number(page) || 1;
   const selectedPokemon = searchParams.get('details');
+
+  const currentPage = useMemo(() => {
+    return Number(page) || 1;
+  }, [page]);
 
   useEffect(() => {
     const fetchData = async () => {

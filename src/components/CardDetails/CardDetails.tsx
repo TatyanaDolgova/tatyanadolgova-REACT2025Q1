@@ -33,40 +33,40 @@ export const CardDetails: React.FC<PokemonDetailsProps> = ({
 
   if (loading) return <Loader />;
   return (
-    <div className={'pokemon-details'}>
-      <button onClick={onClose} className={'close-button'}>
+    <div className="pokemon-details" data-testid="card-details">
+      <button onClick={onClose} className="close-button">
         ✖
       </button>
 
-      <div className={'pokemon-header'}>
+      <div className="pokemon-header">
         <h2>{pokemon?.species.name}</h2>
         <img
           src={pokemon?.imageSrc}
           alt={pokemon?.species.name}
-          className={'pokemon-image'}
+          className="pokemon-image"
         />
       </div>
 
-      <div className={'pokemon-info'}>
-        <div className={'pokemon-basic-info'}>
-          <p>
+      <div className="pokemon-info">
+        <div className="pokemon-basic-info">
+          <p data-testid="card-details-height">
             <span>Height:</span> {pokemon?.height}m
           </p>
-          <p>
+          <p data-testid="card-details-weight">
             <span>Weight:</span> {pokemon?.weight}kg
           </p>
-          <p>
+          <p data-testid="card-details-experience">
             <span>Base Experience:</span> {pokemon?.base_experience}
           </p>
         </div>
 
-        <div className={'pokemon-abilities'}>
+        <div className="pokemon-abilities">
           <h3>Abilities</h3>
           <ul>
             {pokemon?.abilities.map((ability, index) => (
               <li key={index}>
-                <strong>{ability.ability.name}</strong>
-                {ability.is_hidden ? ' (Hidden)' : ''} (Slot {ability.slot})
+                <span>{ability.ability.name}</span>
+                {ability.is_hidden ? ' Hidden' : ''} (Slot {ability.slot})
               </li>
             ))}
           </ul>

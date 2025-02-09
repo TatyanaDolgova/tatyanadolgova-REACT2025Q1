@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Search.css';
+import { useSearchRequest } from '../../hooks/useSearchRequest';
 
 interface SearchProps {
   onSearch: (searchTerm: string) => void;
@@ -8,13 +9,11 @@ interface SearchProps {
 
 export const Search = ({ onSearch, initialValue }: SearchProps) => {
   const [searchTerm, setSearchTerm] = useState(initialValue);
+  const [searchRequest] = useSearchRequest();
 
   useEffect(() => {
-    const savedSearch = localStorage.getItem('searchRequest');
-    if (savedSearch) {
-      setSearchTerm(savedSearch);
-    }
-  }, []);
+    setSearchTerm(searchRequest);
+  }, [searchRequest]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);

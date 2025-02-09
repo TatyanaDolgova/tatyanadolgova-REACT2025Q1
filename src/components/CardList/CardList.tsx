@@ -23,13 +23,20 @@ export const CardList = ({ pokemons, onSelect, onClick }: CardListProps) => {
 
   return (
     <div className="card-list" onClick={onHandleClick}>
-      {pokemons.map((pokemon) => (
-        <Card
-          key={pokemon.name}
-          pokemon={pokemon}
-          onClick={() => onSelect(pokemon.name)}
-        />
-      ))}
+      {pokemons.length > 0 ? (
+        pokemons.map((pokemon) => (
+          <Card
+            key={pokemon.name}
+            pokemon={pokemon}
+            onClick={() => onSelect(pokemon.name)}
+            data-testid="card"
+          />
+        ))
+      ) : (
+        <p data-testid="no-pokemon-message" className="no-pokemon-message">
+          Pokemons not found
+        </p>
+      )}
     </div>
   );
 };
