@@ -35,6 +35,7 @@ export const Search = ({ onSearch, initialValue }: SearchProps) => {
         placeholder="Enter your query"
         className="search-input"
         onChange={handleInputChange}
+        data-testid="search"
       />
       <button onClick={handleSearch} className="button">
         Search
