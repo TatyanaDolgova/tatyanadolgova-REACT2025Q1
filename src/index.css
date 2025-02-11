@@ -2,86 +2,42 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  /* background-image: url('./assets/background.webp'); */
   background-size: 100%;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: #535bf2;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-
-button:hover {
-  border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-
-  a:hover {
-    color: #747bff;
-  }
-
-  button {
-    background-color: #f9f9f9;
-  }
+body {
+  background: linear-gradient(135deg, #fef6e4, #e0f2fe);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
 }
 
 .button {
-  padding: 12px 18px;
+  padding: 10px 18px;
   font-size: 16px;
-  text-transform: uppercase;
-  cursor: pointer;
-  background-color: #ff9800;
   color: white;
+  background: linear-gradient(135deg, #f6d365, #fda085);
   border: none;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
 .search-button:hover {
-  background-color: #e68900;
+  background: linear-gradient(135deg, #fda085, #f6d365);
   transform: scale(1.05);
 }
 
 .search-button:active {
-  transform: scale(1);
+  transform: scale(0.95);
 }
 
 .error-button {
   display: block;
   margin: 0 auto;
+  background: #d8000c;
 }
 
 .error-message {
@@ -94,6 +50,12 @@ button:focus-visible {
   width: 50%;
   margin: 50px auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 600px) {

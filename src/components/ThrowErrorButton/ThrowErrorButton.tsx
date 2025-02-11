@@ -1,28 +1,13 @@
-import { Component } from 'react';
+import { useState } from 'react';
 
-interface ThrowErrorButtonState {
-  hasError: boolean;
-}
+export const ThrowErrorButton = () => {
+  const [hasError, setHasError] = useState(false);
 
-export class ThrowErrorButton extends Component<object, ThrowErrorButtonState> {
-  constructor(props: object) {
-    super(props);
-    this.state = { hasError: false };
-  }
+  if (hasError) throw new Error('Something went wrong in ThrowErrorButton!');
 
-  handleClick = () => {
-    this.setState({ hasError: true });
-  };
-
-  render() {
-    if (this.state.hasError) {
-      throw new Error('Something went wrong in ThrowErrorButton!');
-    }
-
-    return (
-      <button className="button error-button" onClick={this.handleClick}>
-        Throw error
-      </button>
-    );
-  }
-}
+  return (
+    <button className="button error-button" onClick={() => setHasError(true)}>
+      Throw error
+    </button>
+  );
+};

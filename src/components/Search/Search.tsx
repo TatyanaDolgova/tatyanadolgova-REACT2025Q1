@@ -1,49 +1,49 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Search.css';
+import { useSearchRequest } from '../../hooks/useSearchRequest';
 
 interface SearchProps {
   onSearch: (searchTerm: string) => void;
-  initialValue: string;
+  initialValue: string | null;
 }
 
-interface SearchState {
-  searchTerm: string;
-}
+export const Search = ({ onSearch, initialValue }: SearchProps) => {
+  const [searchTerm, setSearchTerm] = useState(initialValue);
+  const [searchRequest] = useSearchRequest();
 
-export class Search extends Component<SearchProps, SearchState> {
-  constructor(props: SearchProps) {
-    super(props);
-    this.state = { searchTerm: props.initialValue };
-  }
-  componentDidMount() {
-    const savedSearch = localStorage.getItem('searchRequest');
-    if (savedSearch) {
-      this.setState({ searchTerm: savedSearch });
+  useEffect(() => {
+    setSearchTerm(searchRequest);
+  }, [searchRequest]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearch = () => {
+    if (searchTerm) {
+      onSearch(searchTerm);
+    } else {
+      onSearch('');
     }
-  }
-
-  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchTerm: event.target.value });
   };
 
-  handleSearch = () => {
-    this.props.onSearch(this.state.searchTerm);
-  };
-
-  render() {
-    return (
-      <div className="search-container">
-        <input
-          type="text"
-          value={this.state.searchTerm}
-          placeholder="Enter your query"
-          className="search-input"
-          onChange={this.handleInputChange}
-        />
-        <button onClick={this.handleSearch} className="button">
-          Search
-        </button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="search-container">
+      <input
+        type="text"
+        value={searchTerm ? searchTerm : ''}
+        placeholder="Enter your query"
+        className="search-input"
+        onChange={handleInputChange}
+        data-testid="search"
+      />
+      <button
+        onClick={handleSearch}
+        className="button"
+        data-testid="search-button"
+      >
+        Search
+      </button>
+    </div>
+  );
+};
