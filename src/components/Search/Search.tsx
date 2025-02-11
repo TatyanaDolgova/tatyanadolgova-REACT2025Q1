@@ -37,7 +37,11 @@ export const Search = ({ onSearch, initialValue }: SearchProps) => {
         onChange={handleInputChange}
         data-testid="search"
       />
-      <button onClick={handleSearch} className="button">
+      <button
+        onClick={handleSearch}
+        className="button"
+        data-testid="search-button"
+      >
         Search
       </button>
     </div>

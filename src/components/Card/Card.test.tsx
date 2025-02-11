@@ -1,11 +1,9 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import { Card } from './Card';
 import { PokemonDetails } from '../../api/fetchPokemons';
-import HomePage from '../../pages/HomePage/HomePage';
-import { BrowserRouter } from 'react-router-dom';
 
 describe('Card', () => {
   const mockPokemon: PokemonDetails = {
@@ -31,20 +29,6 @@ describe('Card', () => {
     await userEvent.click(card);
 
     expect(handleClick).toHaveBeenCalledTimes(1);
-  });
-
-  it('displays detailed card information when clicked', async () => {
-    render(
-      <BrowserRouter>
-        <HomePage />
-      </BrowserRouter>
-    );
-
-    const cardElement = await screen.findAllByTestId('card');
-    fireEvent.click(cardElement[0]);
-
-    const cardDetails = await screen.findByTestId('card-details');
-    expect(cardDetails).toBeInTheDocument();
   });
 
   it('fetches and displays detailed card information on click', async () => {
