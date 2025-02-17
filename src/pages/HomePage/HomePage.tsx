@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useRef } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { fetchPokemons, PokemonDetails } from '../../store/pokemonApi';
+import { useGetPokemonsQuery } from '../../store/pokemonApi';
 import { Search } from '../../components/Search/Search';
 import { ErrorBoundary } from '../../components/ErrorBoundary/ErrorBoundary';
 import { Loader } from '../../components/Loader/Loader';
@@ -9,43 +9,33 @@ import { Pagination } from '../../components/Pagination/Pagination';
 import { ThrowErrorButton } from '../../components/ThrowErrorButton/ThrowErrorButton';
 import { CardDetails } from '../../components/CardDetails/CardDetails';
 import { useSearchRequest } from '../../hooks/useSearchRequest';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import {
+  selectPokemon,
+  unselectAllPokemons,
+  unselectPokemon,
+} from '../../store/pokemonSlice';
 
 const HomePage = () => {
+  const downloadUrlRef = useRef<string | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [pokemons, setPokemons] = useState<PokemonDetails[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [totalPages, setTotalPages] = useState(1);
-  const [searchRequest, setSearchRequest] = useSearchRequest();
   const { page } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const selectedPokemon = searchParams.get('details');
+  const [searchRequest, setSearchRequest] = useSearchRequest();
+  const { data, error, isLoading } = useGetPokemonsQuery({
+    query: searchRequest,
+    page: Number(page) || 1,
+  });
+  const selectedPokemons = useSelector(
+    (state: RootState) => state.pokemon.selectedPokemons
+  );
 
   const currentPage = useMemo(() => {
     return Number(page) || 1;
   }, [page]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await fetchPokemons(searchRequest, currentPage);
-        setPokemons(data.pokemons);
-        setTotalPages(Math.ceil(data.count / 10));
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError('Произошла неизвестная ошибка.');
-        }
-      }
-    };
-
-    fetchData();
-  }, [searchRequest, currentPage]);
 
   const handleSearch = async (query: string) => {
     setSearchRequest(query);
@@ -66,20 +56,71 @@ const HomePage = () => {
     });
   };
 
+  const handleCheckboxChange = (id: string) => {
+    if (selectedPokemons.includes(id)) {
+      dispatch(unselectPokemon(id));
+    } else {
+      dispatch(selectPokemon(id));
+    }
+  };
+
+  const handleUnselectAll = () => {
+    dispatch(unselectAllPokemons());
+  };
+
+  const handleDownload = () => {
+    if (!selectedPokemons.length || !data?.pokemons) return;
+
+    const csvContent = selectedPokemons
+      .map((name) => {
+        const pokemon = data.pokemons.find((p) => p.name === name);
+        return pokemon
+          ? `${pokemon.name},${pokemon.height},${pokemon.base_experience}`
+          : '';
+      })
+      .filter((line) => line !== '')
+      .join('\n');
+
+    if (!csvContent) return;
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+
+    downloadUrlRef.current = url;
+
+    const downloadFile = () => {
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${selectedPokemons.length}_pokemons.csv`;
+      link.dispatchEvent(new MouseEvent('click'));
+    };
+
+    downloadFile();
+
+    setTimeout(() => {
+      if (downloadUrlRef.current) {
+        URL.revokeObjectURL(downloadUrlRef.current);
+        downloadUrlRef.current = null;
+      }
+    }, 100);
+  };
+
   return (
     <>
       <Search onSearch={handleSearch} initialValue={searchRequest} />
       <ErrorBoundary>
-        {loading && <Loader />}
+        {isLoading && <Loader />}
         {error ? (
-          <p className="error-message">{error}</p>
+          <p className="error-message">Ошибка загрузки данных.</p>
         ) : (
           <>
             <div className="container">
               <CardList
-                pokemons={pokemons}
+                pokemons={data?.pokemons || []}
                 onSelect={handleSelectPokemon}
                 onClick={handleCloseDetails}
+                onCheckboxChange={handleCheckboxChange}
+                selectedPokemons={selectedPokemons}
               />
               {selectedPokemon && (
                 <div className="right-section">
@@ -92,14 +133,21 @@ const HomePage = () => {
               )}
             </div>
 
-            {totalPages > 1 && (
+            {data?.count && data.count > 10 && (
               <Pagination
                 currentPage={currentPage}
-                totalPages={totalPages}
+                totalPages={data.count}
                 onPageChange={setPage}
               />
             )}
           </>
+        )}
+        {selectedPokemons.length > 0 && (
+          <div className="flyout">
+            <p>{selectedPokemons.length} items are selected</p>
+            <button onClick={handleUnselectAll}>Unselect all</button>
+            <button onClick={handleDownload}>Download</button>
+          </div>
         )}
         <ThrowErrorButton />
       </ErrorBoundary>
