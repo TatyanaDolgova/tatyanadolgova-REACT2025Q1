@@ -16,6 +16,7 @@ import {
   unselectAllPokemons,
   unselectPokemon,
 } from '../../store/pokemonSlice';
+import { useTheme } from '../../context/ThemeContext';
 
 const HomePage = () => {
   const downloadUrlRef = useRef<string | null>(null);
@@ -32,6 +33,7 @@ const HomePage = () => {
   const selectedPokemons = useSelector(
     (state: RootState) => state.pokemon.selectedPokemons
   );
+  const { theme, toggleTheme } = useTheme();
 
   const currentPage = useMemo(() => {
     return Number(page) || 1;
@@ -106,7 +108,8 @@ const HomePage = () => {
   };
 
   return (
-    <>
+    <div className={`app ${theme}`}>
+      <button onClick={toggleTheme}>Toggle Theme</button>
       <Search onSearch={handleSearch} initialValue={searchRequest} />
       <ErrorBoundary>
         {isLoading && <Loader />}
@@ -151,7 +154,7 @@ const HomePage = () => {
         )}
         <ThrowErrorButton />
       </ErrorBoundary>
-    </>
+    </div>
   );
 };
 

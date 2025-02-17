@@ -4,6 +4,7 @@ import './index.css';
 import App from './App.tsx';
 import { Provider } from 'react-redux';
 import { store } from './store/store.ts';
+import { ThemeProvider } from './context/ThemeContext.tsx';
 
 const root = document.getElementById('root');
 
@@ -11,7 +12,9 @@ if (root) {
   createRoot(root).render(
     <StrictMode>
       <Provider store={store}>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </Provider>
     </StrictMode>
   );

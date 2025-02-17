@@ -58,3 +58,41 @@
 .card:hover .card-header {
   color: #ff6347;
 }
+
+.app.dark .card {
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.app.dark .card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.app.dark .card-header {
+  color: #ecf0f1;
+}
+
+.app.dark .card img {
+  background: #1e272e;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.app.dark .card-checkbox input[type="checkbox"] {
+  filter: brightness(80%);
+}
+
+.app.dark .card-checkbox input[type="checkbox"]:checked {
+  filter: brightness(100%);
+}
+
+.app.dark .card-checkbox label {
+  color: #bdc3c7;
+}
+
+.app.dark .card-checkbox label:hover {
+  color: #1abc9c;
+}
+
+.app.dark .card:hover .card-header {
+  color: #1abc9c;
+}
