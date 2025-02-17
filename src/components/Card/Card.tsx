@@ -1,5 +1,5 @@
 import './Card.css';
-import { PokemonDetails } from '../../api/fetchPokemons';
+import { PokemonDetails } from '../../store/pokemonApi';
 
 interface CardProps {
   pokemon: PokemonDetails;

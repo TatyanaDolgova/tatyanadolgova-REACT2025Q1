@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import { Card } from './Card';
-import { PokemonDetails } from '../../api/fetchPokemons';
+import { PokemonDetails } from '../../store/pokemonApi';
 
 describe('Card', () => {
   const mockPokemon: PokemonDetails = {

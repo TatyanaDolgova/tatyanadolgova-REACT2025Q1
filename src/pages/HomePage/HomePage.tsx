@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { fetchPokemons, PokemonDetails } from '../../api/fetchPokemons';
+import { fetchPokemons, PokemonDetails } from '../../store/pokemonApi';
 import { Search } from '../../components/Search/Search';
 import { ErrorBoundary } from '../../components/ErrorBoundary/ErrorBoundary';
 import { Loader } from '../../components/Loader/Loader';

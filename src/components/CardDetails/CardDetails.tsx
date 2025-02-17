@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchPokemons, PokemonDetails } from '../../api/fetchPokemons';
+import { fetchPokemons, PokemonDetails } from '../../store/pokemonApi';
 import { Loader } from '../Loader/Loader';
 import './CardDetails.css';
 
