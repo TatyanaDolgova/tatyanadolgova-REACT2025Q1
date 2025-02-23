@@ -1,12 +1,15 @@
+import '@testing-library/jest-dom';
+
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
 import {
+  cleanup,
+  fireEvent,
   render,
   screen,
-  fireEvent,
-  cleanup,
   waitFor,
 } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { Search } from './Search';
 
 beforeEach(() => {

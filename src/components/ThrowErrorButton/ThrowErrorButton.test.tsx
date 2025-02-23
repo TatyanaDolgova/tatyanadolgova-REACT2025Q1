@@ -1,8 +1,11 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
-import { ThrowErrorButton } from './ThrowErrorButton';
-import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 import '@testing-library/jest-dom';
+
+import { describe, expect, it } from 'vitest';
+
+import { fireEvent, render, screen } from '@testing-library/react';
+
+import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
+import { ThrowErrorButton } from './ThrowErrorButton';
 
 describe('ThrowErrorButton', () => {
   it('renders the button correctly', () => {

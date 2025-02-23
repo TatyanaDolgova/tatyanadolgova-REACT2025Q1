@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-interface PokemonRequest {
+interface PokemonListItem {
   name: string;
   url: string;
 }
@@ -16,8 +16,8 @@ interface Ability {
 
 interface VersionGroupDetail {
   level_learned_at: number;
-  move_learn_method: PokemonRequest;
-  version_group: PokemonRequest;
+  move_learn_method: PokemonListItem;
+  version_group: PokemonListItem;
 }
 
 interface Move {
@@ -52,7 +52,7 @@ export interface PokemonDetails {
 }
 
 interface PokemonListResponse {
-  results: PokemonRequest[];
+  results: PokemonListItem[];
   count: number;
 }
 
@@ -73,21 +73,15 @@ export const pokemonApi = createApi({
       ) => {
         if ('results' in response) {
           const dataResponse = response as PokemonListResponse;
-          const pokemons: PokemonDetails[] = await Promise.all(
+          const pokemons = await Promise.all(
             dataResponse.results.map(async (pokemon) => {
               const detailsRes = await fetch(pokemon.url);
-              const pokemonDetails: PokemonDetails = await detailsRes.json();
-              return {
-                ...pokemonDetails,
-                name: pokemonDetails.name,
-                sprites: pokemonDetails.sprites,
-              };
+              return detailsRes.json();
             })
           );
           return { pokemons, count: dataResponse.count };
         } else {
-          const pokemonDetails = response as PokemonDetails;
-          return { pokemons: [pokemonDetails], count: 1 };
+          return { pokemons: [response as PokemonDetails], count: 1 };
         }
       },
     }),

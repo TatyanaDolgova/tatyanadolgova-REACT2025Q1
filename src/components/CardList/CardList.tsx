@@ -1,7 +1,9 @@
-import { Card } from '../Card/Card';
 import './CardList.css';
-import { PokemonDetails } from '../../store/pokemonApi';
+
 import { useState } from 'react';
+
+import { PokemonDetails } from '../../store/pokemonApi';
+import { Card } from '../Card/Card';
 
 interface CardListProps {
   pokemons: PokemonDetails[];

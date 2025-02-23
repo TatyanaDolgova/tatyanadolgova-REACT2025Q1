@@ -1,12 +1,15 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
-import { HomePage } from './HomePage';
-import { pokemonApi, useGetPokemonsQuery } from '../../store/pokemonApi';
-import { useParams, useSearchParams } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from '../../store/store';
 import '@testing-library/jest-dom';
+
+import { Provider } from 'react-redux';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { describe, expect, it, vi } from 'vitest';
+
+import { render, screen } from '@testing-library/react';
+
 import { ThemeProvider } from '../../context/ThemeProvider';
+import { pokemonApi, useGetPokemonsQuery } from '../../store/pokemonApi';
+import { store } from '../../store/store';
+import { HomePage } from './HomePage';
 
 vi.mock('react-router-dom', () => ({
   ...vi.importActual('react-router-dom'),

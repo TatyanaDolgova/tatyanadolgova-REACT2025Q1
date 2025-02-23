@@ -1,8 +1,11 @@
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
+
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { Pagination } from './Pagination';
 import { describe, expect, it, vi } from 'vitest';
+
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+
+import { Pagination } from './Pagination';
 
 describe('Pagination', () => {
   it('should update the page number in the URL when clicking next and previous', () => {

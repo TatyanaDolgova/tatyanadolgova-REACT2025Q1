@@ -1,9 +1,12 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
-import { SelectedPokemonsFlyout } from './SelectedPokemonsFlyout';
-import { useDownloadPokemonCSV } from '../../hooks/useDownloadPokemonCSV/useDownloadPokemonCSV';
-import { MutableRefObject } from 'react';
 import '@testing-library/jest-dom';
+
+import { MutableRefObject } from 'react';
+import { describe, expect, it, vi } from 'vitest';
+
+import { fireEvent, render, screen } from '@testing-library/react';
+
+import { useDownloadPokemonCSV } from '../../hooks/useDownloadPokemonCSV/useDownloadPokemonCSV';
+import { SelectedPokemonsFlyout } from './SelectedPokemonsFlyout';
 
 const pokemon = {
   abilities: [

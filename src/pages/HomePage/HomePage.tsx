@@ -1,22 +1,23 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { useGetPokemonsQuery } from '../../store/pokemonApi';
-import { Search } from '../../components/Search/Search';
+
+import { CardDetails } from '../../components/CardDetails/CardDetails';
+import { CardList } from '../../components/CardList/CardList';
 import { ErrorBoundary } from '../../components/ErrorBoundary/ErrorBoundary';
 import { Loader } from '../../components/Loader/Loader';
-import { CardList } from '../../components/CardList/CardList';
 import { Pagination } from '../../components/Pagination/Pagination';
+import { Search } from '../../components/Search/Search';
+import SelectedPokemonsFlyout from '../../components/SelectedPokemonsFlyout/SelectedPokemonsFlyout';
 import { ThrowErrorButton } from '../../components/ThrowErrorButton/ThrowErrorButton';
-import { CardDetails } from '../../components/CardDetails/CardDetails';
+import { useTheme } from '../../context/ThemeContext';
 import { useSearchRequest } from '../../hooks/useSearchRequest/useSearchRequest';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { useGetPokemonsQuery } from '../../store/pokemonApi';
 import {
   selectPokemon,
   unselectAllPokemons,
   unselectPokemon,
 } from '../../store/pokemonSlice';
-import SelectedPokemonsFlyout from '../../components/SelectedPokemonsFlyout/SelectedPokemonsFlyout';
-import { useTheme } from '../../context/ThemeContext';
+import { RootState } from '../../store/store';
 
 export const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();

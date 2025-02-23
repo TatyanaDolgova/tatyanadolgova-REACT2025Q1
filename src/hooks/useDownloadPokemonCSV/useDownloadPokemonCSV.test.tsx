@@ -1,7 +1,9 @@
-import { renderHook, act } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { useDownloadPokemonCSV } from './useDownloadPokemonCSV';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import { act, renderHook } from '@testing-library/react';
+
 import { PokemonDetails } from '../../store/pokemonApi';
+import { useDownloadPokemonCSV } from './useDownloadPokemonCSV';
 
 const pokemon = {
   abilities: [

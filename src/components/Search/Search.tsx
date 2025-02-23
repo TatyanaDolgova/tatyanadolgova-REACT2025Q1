@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import './Search.css';
+
+import React, { useEffect, useState } from 'react';
+
 import { useSearchRequest } from '../../hooks/useSearchRequest/useSearchRequest';
 
 interface SearchProps {

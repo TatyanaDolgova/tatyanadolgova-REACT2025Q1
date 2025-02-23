@@ -1,7 +1,10 @@
-import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { ErrorBoundary } from './ErrorBoundary';
+
 import { describe, expect, it } from 'vitest';
+
+import { render, screen } from '@testing-library/react';
+
+import { ErrorBoundary } from './ErrorBoundary';
 
 describe('ErrorBoundary', () => {
   it('should render children when there is no error', () => {

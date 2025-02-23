@@ -1,6 +1,7 @@
+import './CardDetails.css';
+
 import { useGetPokemonsQuery } from '../../store/pokemonApi';
 import { Loader } from '../Loader/Loader';
-import './CardDetails.css';
 
 interface PokemonDetailsProps {
   id: string;

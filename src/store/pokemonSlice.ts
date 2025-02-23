@@ -15,7 +15,7 @@ const pokemonSlice = createSlice({
     selectPokemon: (state, action: PayloadAction<string>) => {
       state.selectedPokemons.push(action.payload);
     },
-    unselectPokemon: (state, action) => {
+    unselectPokemon: (state, action: PayloadAction<string>) => {
       state.selectedPokemons = state.selectedPokemons.filter(
         (id) => id !== action.payload
       );

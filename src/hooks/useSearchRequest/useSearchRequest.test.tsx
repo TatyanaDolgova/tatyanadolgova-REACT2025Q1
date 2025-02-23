@@ -1,6 +1,8 @@
-import { renderHook, act } from '@testing-library/react';
-import { useSearchRequest } from './useSearchRequest';
 import { beforeEach, describe, expect, it } from 'vitest';
+
+import { act, renderHook } from '@testing-library/react';
+
+import { useSearchRequest } from './useSearchRequest';
 
 beforeEach(() => {
   localStorage.clear();

@@ -1,8 +1,11 @@
-import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { NotFoundPage } from './NotFoundPage';
+
 import { BrowserRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
+
+import { render, screen } from '@testing-library/react';
+
+import { NotFoundPage } from './NotFoundPage';
 
 describe('NotFoundPage', () => {
   it('should render 404 title and error message', () => {

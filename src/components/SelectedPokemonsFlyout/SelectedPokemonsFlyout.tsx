@@ -1,6 +1,7 @@
 import './SelectedPokemonsFlyout.css';
-import { PokemonDetails } from '../../store/pokemonApi';
+
 import { useDownloadPokemonCSV } from '../../hooks/useDownloadPokemonCSV/useDownloadPokemonCSV';
+import { PokemonDetails } from '../../store/pokemonApi';
 
 interface SelectedPokemonsFlyoutProps {
   selectedPokemons: string[];

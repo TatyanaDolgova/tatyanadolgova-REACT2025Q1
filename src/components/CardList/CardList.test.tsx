@@ -1,8 +1,10 @@
+import { describe, expect, it, vi } from 'vitest';
+
 import { render, screen } from '@testing-library/react';
-import { describe, expect, vi, it } from 'vitest';
-import { CardList } from './CardList';
-import { PokemonDetails } from '../../store/pokemonApi';
 import userEvent from '@testing-library/user-event';
+
+import { PokemonDetails } from '../../store/pokemonApi';
+import { CardList } from './CardList';
 
 const pokemon = {
   abilities: [

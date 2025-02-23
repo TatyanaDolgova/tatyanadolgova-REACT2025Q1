@@ -1,8 +1,11 @@
-import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { CardDetails } from './CardDetails';
+
 import { describe, expect, it, vi } from 'vitest';
+
+import { render, screen, waitFor } from '@testing-library/react';
+
 import { useGetPokemonsQuery } from '../../store/pokemonApi';
+import { CardDetails } from './CardDetails';
 
 vi.mock('../../store/pokemonApi', () => ({
   useGetPokemonsQuery: vi.fn(),
