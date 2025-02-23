@@ -15,6 +15,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   return (
     <div className="pagination">
       <button
+        className="button"
         disabled={currentPage <= 1}
         onClick={() => onPageChange(currentPage - 1)}
       >
@@ -22,6 +23,7 @@ export const Pagination: React.FC<PaginationProps> = ({
       </button>
       <span>{`Page ${currentPage} of ${totalPages}`}</span>
       <button
+        className="button"
         disabled={currentPage >= totalPages}
         onClick={() => onPageChange(currentPage + 1)}
       >

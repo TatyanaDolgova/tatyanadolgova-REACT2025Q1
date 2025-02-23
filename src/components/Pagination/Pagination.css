@@ -23,12 +23,6 @@
   transition: all 0.3s ease-in-out;
 }
 
-
-.pagination button:hover {
-  background: linear-gradient(135deg, #fda085, #f6d365);
-  transform: scale(1.05);
-}
-
 .pagination button:disabled {
   background: #ddd;
   cursor: not-allowed;
@@ -39,4 +33,27 @@
   font-size: 16px;
   font-weight: 500;
   color: #555;
+}
+
+.app.dark .pagination {
+  background: #2c3e50;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.app.dark .pagination button {
+  background: linear-gradient(135deg, #1abc9c, #16a085);
+  color: #ecf0f1;
+}
+
+.app.dark .pagination button:hover {
+  background: linear-gradient(135deg, #16a085, #1abc9c);
+}
+
+.app.dark .pagination button:disabled {
+  background: #555;
+  color: #888;
+}
+
+.app.dark .pagination span {
+  color: #bdc3c7;
 }

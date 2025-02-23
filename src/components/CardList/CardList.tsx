@@ -1,15 +1,23 @@
 import { Card } from '../Card/Card';
 import './CardList.css';
-import { PokemonDetails } from '../../api/fetchPokemons';
+import { PokemonDetails } from '../../store/pokemonApi';
 import { useState } from 'react';
 
 interface CardListProps {
   pokemons: PokemonDetails[];
   onSelect: (id: string) => void;
   onClick: () => void;
+  onCheckboxChange: (id: string) => void;
+  selectedPokemons: string[];
 }
 
-export const CardList = ({ pokemons, onSelect, onClick }: CardListProps) => {
+export const CardList = ({
+  pokemons,
+  onSelect,
+  onClick,
+  onCheckboxChange,
+  selectedPokemons,
+}: CardListProps) => {
   const [onOpen, setOnOpen] = useState(false);
 
   const onHandleClick = () => {
@@ -22,7 +30,7 @@ export const CardList = ({ pokemons, onSelect, onClick }: CardListProps) => {
   };
 
   return (
-    <div className="card-list" onClick={onHandleClick}>
+    <div className="card-list" onClick={onHandleClick} data-testid="card-list">
       {pokemons.length > 0 ? (
         pokemons.map((pokemon) => (
           <Card
@@ -30,6 +38,8 @@ export const CardList = ({ pokemons, onSelect, onClick }: CardListProps) => {
             pokemon={pokemon}
             onClick={() => onSelect(pokemon.name)}
             data-testid="card"
+            onCheckboxChange={onCheckboxChange}
+            selectedPokemons={selectedPokemons}
           />
         ))
       ) : (

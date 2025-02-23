@@ -97,3 +97,46 @@ button.close-button:hover {
   margin-bottom: 6px;
   color: #666;
 }
+
+
+.app.dark .pokemon-details {
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.app.dark .pokemon-details:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.app.dark .pokemon-header {
+  color: #ecf0f1;
+}
+
+.app.dark .pokemon-image {
+  background: #1c2833;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.app.dark .pokemon-basic-info p {
+  color: #bdc3c7;
+}
+
+.app.dark .pokemon-basic-info span {
+  color: #f1c40f;
+}
+
+.app.dark .pokemon-abilities h3 {
+  color: #ecf0f1;
+}
+
+.app.dark .pokemon-abilities li {
+  color: #95a5a6;
+}
+
+.app.dark button.close-button {
+  color: #ecf0f1;
+}
+
+.app.dark button.close-button:hover {
+  color: #e74c3c;
+}

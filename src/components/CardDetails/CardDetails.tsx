@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { fetchPokemons, PokemonDetails } from '../../api/fetchPokemons';
+import { useGetPokemonsQuery } from '../../store/pokemonApi';
 import { Loader } from '../Loader/Loader';
 import './CardDetails.css';
 
@@ -9,29 +8,24 @@ interface PokemonDetailsProps {
   onClose: () => void;
 }
 
-export const CardDetails: React.FC<PokemonDetailsProps> = ({
+export const CardDetails = ({
   id,
   onClose,
   currentPage,
-}) => {
-  const [pokemon, setPokemon] = useState<PokemonDetails | null>(null);
-  const [loading, setLoading] = useState(true);
+}: PokemonDetailsProps) => {
+  const { data, error, isLoading } = useGetPokemonsQuery({
+    query: id,
+    page: currentPage,
+  });
 
-  useEffect(() => {
-    const fetchDetails = async () => {
-      setLoading(true);
-      try {
-        const data = await fetchPokemons(id, currentPage);
-        setPokemon(data.pokemons[0]);
-      } finally {
-        setLoading(false);
-      }
-    };
+  if (isLoading) return <Loader />;
 
-    fetchDetails();
-  }, [id, currentPage]);
+  if (error) {
+    return <div className="error-message">Failed to load Pokémon details.</div>;
+  }
 
-  if (loading) return <Loader />;
+  const pokemon = data?.pokemons[0];
+
   return (
     <div className="pokemon-details" data-testid="card-details">
       <button onClick={onClose} className="close-button">
@@ -41,7 +35,7 @@ export const CardDetails: React.FC<PokemonDetailsProps> = ({
       <div className="pokemon-header">
         <h2>{pokemon?.species.name}</h2>
         <img
-          src={pokemon?.imageSrc}
+          src={pokemon?.sprites.other['official-artwork'].front_default}
           alt={pokemon?.species.name}
           className="pokemon-image"
         />

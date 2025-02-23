@@ -34,3 +34,8 @@
 .error-button:hover {
   background-color: #a00008;
 }
+
+.app.dark .error-container {
+  border: 1px solid var(--border-color);
+  background: rgba(44, 62, 80, 0.9);
+}
