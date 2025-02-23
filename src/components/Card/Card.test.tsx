@@ -8,7 +8,13 @@ import { PokemonDetails } from '../../store/pokemonApi';
 describe('Card', () => {
   const mockPokemon: PokemonDetails = {
     name: 'Pikachu',
-    imageSrc: 'pikachu.png',
+    sprites: {
+      other: {
+        'official-artwork': {
+          front_default: 'pikachu.png',
+        },
+      },
+    },
   } as PokemonDetails;
 
   it('renders the relevant card data', () => {

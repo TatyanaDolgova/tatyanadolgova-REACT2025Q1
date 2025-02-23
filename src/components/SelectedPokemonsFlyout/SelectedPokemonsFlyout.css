@@ -1,0 +1,94 @@
+.flyout {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #f6d365, #fda085);
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  max-width: 280px;
+  animation: fadeIn 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.flyout p {
+  margin: 0 0 12px;
+  color: #444;
+}
+
+.flyout-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.flyout-button {
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.flyout-button.unselect {
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+}
+
+.flyout-button.unselect:hover {
+  background: linear-gradient(135deg, #ff6347, #ff7e5f);
+  transform: translateY(-2px);
+}
+
+.flyout-button.download {
+  background: linear-gradient(135deg, #56ccf2, #2f80ed);
+}
+
+.flyout-button.download:hover {
+  background: linear-gradient(135deg, #2f80ed, #1e6091);
+  transform: translateY(-2px);
+}
+
+.dark .flyout {
+  background: linear-gradient(135deg, #333, #555);
+  color: white;
+}
+
+.dark .flyout p {
+  color: #ddd;
+}
+
+.dark .flyout-button.unselect {
+  background: linear-gradient(135deg, #e74c3c, #ff6b6b);
+}
+
+.dark .flyout-button.unselect:hover {
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
+}
+
+.dark .flyout-button.download {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.dark .flyout-button.download:hover {
+  background: linear-gradient(135deg, #2c3e50, #3498db);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

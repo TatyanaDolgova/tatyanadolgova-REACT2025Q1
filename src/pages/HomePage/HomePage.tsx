@@ -1,4 +1,3 @@
-import { useMemo, useRef } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useGetPokemonsQuery } from '../../store/pokemonApi';
 import { Search } from '../../components/Search/Search';
@@ -8,7 +7,7 @@ import { CardList } from '../../components/CardList/CardList';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { ThrowErrorButton } from '../../components/ThrowErrorButton/ThrowErrorButton';
 import { CardDetails } from '../../components/CardDetails/CardDetails';
-import { useSearchRequest } from '../../hooks/useSearchRequest';
+import { useSearchRequest } from '../../hooks/useSearchRequest/useSearchRequest';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import {
@@ -17,9 +16,9 @@ import {
   unselectPokemon,
 } from '../../store/pokemonSlice';
 import { useTheme } from '../../context/ThemeContext';
+import SelectedPokemonsFlyout from '../../components/SelectedPokemonsFlyout/SelectedPokemonsFlyout';
 
 const HomePage = () => {
-  const downloadUrlRef = useRef<string | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const { page } = useParams();
   const navigate = useNavigate();
@@ -35,16 +34,14 @@ const HomePage = () => {
   );
   const { theme, toggleTheme } = useTheme();
 
-  const currentPage = useMemo(() => {
-    return Number(page) || 1;
-  }, [page]);
+  const currentPage = Number(page) || 1;
 
   const handleSearch = async (query: string) => {
     setSearchRequest(query);
   };
 
   const setPage = (newPage: number) => {
-    navigate(`/pages/${newPage}`);
+    navigate(`/pages/${newPage}`, { replace: true });
   };
 
   const handleSelectPokemon = (id: string) => {
@@ -53,8 +50,9 @@ const HomePage = () => {
 
   const handleCloseDetails = () => {
     setSearchParams((prevParams) => {
-      prevParams.delete('details');
-      return prevParams;
+      const updatedParams = new URLSearchParams(prevParams);
+      updatedParams.delete('details');
+      return updatedParams;
     });
   };
 
@@ -70,46 +68,11 @@ const HomePage = () => {
     dispatch(unselectAllPokemons());
   };
 
-  const handleDownload = () => {
-    if (!selectedPokemons.length || !data?.pokemons) return;
-
-    const csvContent = selectedPokemons
-      .map((name) => {
-        const pokemon = data.pokemons.find((p) => p.name === name);
-        return pokemon
-          ? `${pokemon.name},${pokemon.height},${pokemon.base_experience}`
-          : '';
-      })
-      .filter((line) => line !== '')
-      .join('\n');
-
-    if (!csvContent) return;
-
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-
-    downloadUrlRef.current = url;
-
-    const downloadFile = () => {
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `${selectedPokemons.length}_pokemons.csv`;
-      link.dispatchEvent(new MouseEvent('click'));
-    };
-
-    downloadFile();
-
-    setTimeout(() => {
-      if (downloadUrlRef.current) {
-        URL.revokeObjectURL(downloadUrlRef.current);
-        downloadUrlRef.current = null;
-      }
-    }, 100);
-  };
-
   return (
     <div className={`app ${theme}`}>
-      <button onClick={toggleTheme}>Toggle Theme</button>
+      <button onClick={toggleTheme} className="button">
+        Toggle Theme
+      </button>
       <Search onSearch={handleSearch} initialValue={searchRequest} />
       <ErrorBoundary>
         {isLoading && <Loader />}
@@ -145,13 +108,11 @@ const HomePage = () => {
             )}
           </>
         )}
-        {selectedPokemons.length > 0 && (
-          <div className="flyout">
-            <p>{selectedPokemons.length} items are selected</p>
-            <button onClick={handleUnselectAll}>Unselect all</button>
-            <button onClick={handleDownload}>Download</button>
-          </div>
-        )}
+        <SelectedPokemonsFlyout
+          selectedPokemons={selectedPokemons}
+          pokemons={data?.pokemons}
+          onUnselectAll={handleUnselectAll}
+        />
         <ThrowErrorButton />
       </ErrorBoundary>
     </div>

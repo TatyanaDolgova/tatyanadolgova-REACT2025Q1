@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Search.css';
-import { useSearchRequest } from '../../hooks/useSearchRequest';
+import { useSearchRequest } from '../../hooks/useSearchRequest/useSearchRequest';
 
 interface SearchProps {
   onSearch: (searchTerm: string) => void;
