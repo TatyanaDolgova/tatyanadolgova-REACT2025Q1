@@ -2,20 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, vi, it } from 'vitest';
 import { CardList } from './CardList';
 import { PokemonDetails } from '../../store/pokemonApi';
-
-vi.mock('../Card/Card', () => ({
-  Card: ({
-    pokemon,
-    onClick,
-  }: {
-    pokemon: PokemonDetails;
-    onClick: () => void;
-  }) => (
-    <div data-testid="card" onClick={onClick}>
-      {pokemon.name}
-    </div>
-  ),
-}));
+import userEvent from '@testing-library/user-event';
 
 const pokemon = {
   abilities: [
@@ -76,7 +63,13 @@ describe('CardList', () => {
     ];
 
     render(
-      <CardList pokemons={mockPokemons} onSelect={vi.fn()} onClick={vi.fn()} />
+      <CardList
+        pokemons={mockPokemons}
+        onSelect={vi.fn()}
+        onClick={vi.fn()}
+        onCheckboxChange={vi.fn()}
+        selectedPokemons={[]}
+      />
     );
 
     const cards = screen.getAllByTestId('card');
@@ -87,10 +80,36 @@ describe('CardList', () => {
     const mockPokemons: PokemonDetails[] = [];
 
     render(
-      <CardList pokemons={mockPokemons} onSelect={vi.fn()} onClick={vi.fn()} />
+      <CardList
+        pokemons={mockPokemons}
+        onSelect={vi.fn()}
+        onClick={vi.fn()}
+        onCheckboxChange={vi.fn()}
+        selectedPokemons={[]}
+      />
     );
 
     const message = screen.getByTestId('no-pokemon-message');
     expect(message.textContent).toBe('Pokemons not found');
+  });
+
+  it('should trigger onSelect when a card is clicked', async () => {
+    const mockSelect = vi.fn();
+    const mockPokemons: PokemonDetails[] = [{ ...pokemon, name: 'Pikachu' }];
+
+    render(
+      <CardList
+        pokemons={mockPokemons}
+        onSelect={mockSelect}
+        onClick={vi.fn()}
+        onCheckboxChange={vi.fn()}
+        selectedPokemons={[]}
+      />
+    );
+
+    const card = screen.getByTestId('card');
+    await userEvent.click(card);
+
+    expect(mockSelect).toHaveBeenCalledWith('Pikachu');
   });
 });

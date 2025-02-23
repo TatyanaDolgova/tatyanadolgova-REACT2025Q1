@@ -30,7 +30,7 @@ export const CardList = ({
   };
 
   return (
-    <div className="card-list" onClick={onHandleClick}>
+    <div className="card-list" onClick={onHandleClick} data-testid="card-list">
       {pokemons.length > 0 ? (
         pokemons.map((pokemon) => (
           <Card

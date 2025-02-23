@@ -31,7 +31,12 @@ export const Card = ({
           onChange={() => onCheckboxChange(pokemon.name)}
           id={`checkbox-${pokemon.name}`}
         />
-        <label htmlFor={`checkbox-${pokemon.name}`}>Select</label>
+        <label
+          htmlFor={`checkbox-${pokemon.name}`}
+          data-testid="select-pokemon"
+        >
+          Select
+        </label>
       </div>
     </div>
   );

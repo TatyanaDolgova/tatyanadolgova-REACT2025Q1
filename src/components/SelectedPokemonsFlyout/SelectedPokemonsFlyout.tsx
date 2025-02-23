@@ -27,7 +27,11 @@ export const SelectedPokemonsFlyout = ({
         <button className="flyout-button unselect" onClick={onUnselectAll}>
           Unselect all
         </button>
-        <button className="flyout-button download" onClick={handleDownload}>
+        <button
+          className="flyout-button download"
+          onClick={handleDownload}
+          data-testid="download-button"
+        >
           Download
         </button>
       </div>

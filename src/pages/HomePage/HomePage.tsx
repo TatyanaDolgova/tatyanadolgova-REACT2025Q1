@@ -15,10 +15,10 @@ import {
   unselectAllPokemons,
   unselectPokemon,
 } from '../../store/pokemonSlice';
-import { useTheme } from '../../context/ThemeContext';
 import SelectedPokemonsFlyout from '../../components/SelectedPokemonsFlyout/SelectedPokemonsFlyout';
+import { useTheme } from '../../context/ThemeContext';
 
-const HomePage = () => {
+export const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { page } = useParams();
   const navigate = useNavigate();
@@ -68,46 +68,45 @@ const HomePage = () => {
     dispatch(unselectAllPokemons());
   };
 
+  if (isLoading) return <Loader />;
+  if (error || !data)
+    return <p className="error-message">Error loading data</p>;
+
   return (
-    <div className={`app ${theme}`}>
+    <div className={`app ${theme}`} data-testid="home-page">
       <button onClick={toggleTheme} className="button">
         Toggle Theme
       </button>
       <Search onSearch={handleSearch} initialValue={searchRequest} />
       <ErrorBoundary>
-        {isLoading && <Loader />}
-        {error ? (
-          <p className="error-message">Ошибка загрузки данных.</p>
-        ) : (
-          <>
-            <div className="container">
-              <CardList
-                pokemons={data?.pokemons || []}
-                onSelect={handleSelectPokemon}
-                onClick={handleCloseDetails}
-                onCheckboxChange={handleCheckboxChange}
-                selectedPokemons={selectedPokemons}
-              />
-              {selectedPokemon && (
-                <div className="right-section">
-                  <CardDetails
-                    id={selectedPokemon}
-                    onClose={handleCloseDetails}
-                    currentPage={currentPage}
-                  />
-                </div>
-              )}
-            </div>
-
-            {data?.count && data.count > 10 && (
-              <Pagination
-                currentPage={currentPage}
-                totalPages={data.count}
-                onPageChange={setPage}
-              />
+        <>
+          <div className="container">
+            <CardList
+              pokemons={data?.pokemons || []}
+              onSelect={handleSelectPokemon}
+              onClick={handleCloseDetails}
+              onCheckboxChange={handleCheckboxChange}
+              selectedPokemons={selectedPokemons}
+            />
+            {selectedPokemon && (
+              <div className="right-section">
+                <CardDetails
+                  id={selectedPokemon}
+                  onClose={handleCloseDetails}
+                  currentPage={currentPage}
+                />
+              </div>
             )}
-          </>
-        )}
+          </div>
+
+          {data?.count && data.count > 10 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={data.count}
+              onPageChange={setPage}
+            />
+          )}
+        </>
         <SelectedPokemonsFlyout
           selectedPokemons={selectedPokemons}
           pokemons={data?.pokemons}
@@ -118,5 +117,3 @@ const HomePage = () => {
     </div>
   );
 };
-
-export default HomePage;
