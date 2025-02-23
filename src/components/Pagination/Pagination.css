@@ -23,11 +23,6 @@
   transition: all 0.3s ease-in-out;
 }
 
-.pagination button:hover {
-  background: linear-gradient(135deg, #fda085, #f6d365);
-  transform: scale(1.05);
-}
-
 .pagination button:disabled {
   background: #ddd;
   cursor: not-allowed;
