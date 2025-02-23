@@ -22,10 +22,12 @@ export const Search = ({ onSearch, initialValue }: SearchProps) => {
   };
 
   const handleSearch = () => {
-    if (searchTerm) {
-      onSearch(searchTerm);
-    } else {
-      onSearch('');
+    onSearch(searchTerm || '');
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch();
     }
   };
 
@@ -38,6 +40,7 @@ export const Search = ({ onSearch, initialValue }: SearchProps) => {
         className="search-input"
         onChange={handleInputChange}
         data-testid="search"
+        onKeyDown={handleKeyDown}
       />
       <button
         onClick={handleSearch}

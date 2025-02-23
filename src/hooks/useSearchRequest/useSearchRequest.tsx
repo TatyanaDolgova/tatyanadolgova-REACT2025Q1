@@ -10,8 +10,14 @@ export const useSearchRequest = (): [
 
   const updateSearchRequest = (query: string) => {
     const trimmedQuery = query.trim();
-    setSearchRequest(trimmedQuery);
-    localStorage.setItem('searchRequest', trimmedQuery);
+    if (trimmedQuery === '') {
+      setSearchRequest(null);
+      localStorage.removeItem('searchRequest');
+    } else {
+      setSearchRequest(trimmedQuery);
+      localStorage.setItem('searchRequest', trimmedQuery);
+    }
   };
+
   return [searchRequest, updateSearchRequest];
 };

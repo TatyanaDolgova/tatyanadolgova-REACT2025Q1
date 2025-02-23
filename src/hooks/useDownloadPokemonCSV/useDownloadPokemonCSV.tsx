@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { PokemonDetails } from '../../store/pokemonApi';
 
@@ -18,11 +18,11 @@ export const useDownloadPokemonCSV = (
     };
   }, [downloadUrl]);
 
-  const handleDownload = () => {
+  const handleDownload = useCallback(() => {
     if (!selectedPokemons.length || !pokemons) return;
 
     const headers = ['Name', 'Height (m)', 'Weight (kg)', 'Base Experience'];
-    const csvRows = [
+    const csvRows: string[] = [
       '\uFEFF' + headers.join(';'),
       ...selectedPokemons.map((name) => {
         const pokemon = pokemons.find((p) => p.name === name);
@@ -34,16 +34,20 @@ export const useDownloadPokemonCSV = (
 
     const csvContent = csvRows.join('\n');
 
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    setDownloadUrl(url);
+    try {
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      setDownloadUrl(url);
 
-    if (downloadLinkRef.current) {
-      downloadLinkRef.current.href = url;
-      downloadLinkRef.current.download = `pokemons_${selectedPokemons.length}.csv`;
-      downloadLinkRef.current.click();
+      if (downloadLinkRef.current) {
+        downloadLinkRef.current.href = url;
+        downloadLinkRef.current.download = `pokemons_${selectedPokemons.length}.csv`;
+        downloadLinkRef.current.click();
+      }
+    } catch (error) {
+      console.error('Failed to generate or download CSV:', error);
     }
-  };
+  }, [selectedPokemons, pokemons]);
 
   return { handleDownload, downloadLinkRef };
 };
